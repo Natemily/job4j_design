@@ -66,6 +66,6 @@ public class UserStoreTest {
         store.add(new User("1", "Petr"));
         store.delete("10");
         User result = store.findById("1");
-        assertThat(result.getUsername(),is("Petr"));
+        assertThat(result.getUsername(), is("Petr"));
     }
 }

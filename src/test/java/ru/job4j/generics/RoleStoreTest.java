@@ -66,6 +66,6 @@ public class RoleStoreTest {
         store.add(new Role("1", "Slayer"));
         store.delete("10");
         Role result = store.findById("1");
-        assertThat(result.getUsername(),is("Slayer"));
+        assertThat(result.getUsername(), is("Slayer"));
     }
 }
