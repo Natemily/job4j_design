@@ -150,10 +150,9 @@ class SimpleArrayListTest {
     }
 
     @Test
-    void whenSetAfterGetIteratorThenMustBeException() {
+    void whenSetAfterGetIteratorThenMustBeOk() {
         Iterator<Integer> iterator = list.iterator();
         list.set(0, 22);
-        assertThatThrownBy(iterator::next)
-                .isInstanceOf(ConcurrentModificationException.class);
+        assertThat(iterator.next()).isEqualTo(22);
     }
 }
