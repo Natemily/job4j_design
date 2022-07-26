@@ -29,14 +29,9 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
         Objects.checkIndex(index, size);
         Node<E> next = first;
         E value = null;
-        if (index == 0) {
-            value = first.getValue();
-        }
-        for (int i = 1; i <= index; i++) {
+        for (int i = 0; i <= index; i++) {
+            value = next.getValue();
             next = next.getNext();
-            if (i == index) {
-                value = next.getValue();
-            }
         }
         return value;
     }
