@@ -1,89 +1,97 @@
 package ru.job4j.iterator;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.is;
-import org.junit.Test;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import java.util.*;
 
-public class FlatMapTest {
+class FlatMapTest {
     @Test
-    public void whenDiffNext() {
+    void whenDiffNext() {
         Iterator<Iterator<Integer>> data = List.of(
                 List.of(1).iterator(),
                 List.of(2, 3).iterator()
         ).iterator();
         FlatMap<Integer> flat = new FlatMap<>(data);
-        assertThat(flat.next(), is(1));
-        assertThat(flat.next(), is(2));
-        assertThat(flat.next(), is(3));
+        assertThat(flat.next()).isEqualTo(1);
+        assertThat(flat.next()).isEqualTo(2);
+        assertThat(flat.next()).isEqualTo(3);
     }
 
     @Test
-    public void whenSeqNext() {
+    void whenSeqNext() {
         Iterator<Iterator<Integer>> data = List.of(
                 List.of(1, 2, 3).iterator()
         ).iterator();
         FlatMap<Integer> flat = new FlatMap<>(data);
-        assertThat(flat.next(), is(1));
-        assertThat(flat.next(), is(2));
-        assertThat(flat.next(), is(3));
+        assertThat(flat.next()).isEqualTo(1);
+        assertThat(flat.next()).isEqualTo(2);
+        assertThat(flat.next()).isEqualTo(3);
     }
 
     @Test
-    public void whenMultiHasNext() {
+    void whenMultiHasNext() {
         Iterator<Iterator<Integer>> data = List.of(
                 List.of(1).iterator()
         ).iterator();
         FlatMap<Integer> flat = new FlatMap<>(data);
-        assertThat(flat.hasNext(), is(true));
-        assertThat(flat.hasNext(), is(true));
+        assertThat(flat.hasNext()).isTrue();
+        assertThat(flat.hasNext()).isTrue();
     }
 
     @Test
-    public void whenHasNextFalse() {
+    void whenHasNextFalse() {
         Iterator<Iterator<Integer>> data = List.of(
                 List.of(1).iterator()
         ).iterator();
         FlatMap<Integer> flat = new FlatMap<>(data);
-        assertThat(flat.next(), is(1));
-        assertThat(flat.hasNext(), is(false));
+        assertThat(flat.next()).isEqualTo(1);
+        assertThat(flat.hasNext()).isFalse();
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void whenEmpty() {
+    @Test
+    void whenEmpty() {
         Iterator<Iterator<Object>> data = List.of(
-                List.of().iterator()
+                Collections.emptyIterator()
         ).iterator();
         FlatMap<Object> flat = new FlatMap<>(data);
-        flat.next();
+        assertThatThrownBy(flat::next)
+                .isInstanceOf(NoSuchElementException.class);
     }
 
     @Test
-    public void whenSeveralEmptyAndNotEmpty() {
-        Iterator<Iterator<?>> it = List.of(
-                List.of().iterator(),
-                List.of().iterator(),
-                List.of().iterator(),
+    void whenEmptyInteger() {
+        Iterator<Integer> empty = Collections.emptyIterator();
+        Iterator<Iterator<Integer>> data = List.of(
+                empty
+        ).iterator();
+        FlatMap<Integer> flat = new FlatMap<>(data);
+        assertThatThrownBy(flat::next)
+                .isInstanceOf(NoSuchElementException.class);
+    }
+
+    @Test
+    void whenSeveralEmptyAndNotEmpty() {
+        Iterator<Integer> empty = Collections.emptyIterator();
+        Iterator<Iterator<Integer>> data = List.of(
+                empty,
+                empty,
+                empty,
                 List.of(1).iterator()
         ).iterator();
-        FlatMap flat = new FlatMap(it);
-        assertTrue(flat.hasNext());
-        assertThat(1, is(flat.next()));
+        FlatMap<Integer> flat = new FlatMap<>(data);
+        assertThat(flat.hasNext()).isTrue();
+        assertThat(flat.next()).isEqualTo(1);
     }
 
     @Test
-    public void whenSeveralEmptyThenReturnFalse() {
-        Iterator<Iterator<Object>> it = List.of(
-                List.of().iterator(),
-                List.of().iterator(),
-                List.of().iterator(),
-                List.of().iterator()
+    void whenSeveralEmptyThenReturnFalse() {
+        Iterator<Integer> empty = Collections.emptyIterator();
+        Iterator<Iterator<Integer>> data = List.of(
+                empty,
+                empty,
+                empty
         ).iterator();
-        FlatMap flat = new FlatMap(it);
-        assertFalse(flat.hasNext());
+        FlatMap<Integer> flat = new FlatMap<>(data);
+        assertThat(flat.hasNext()).isFalse();
     }
 }
