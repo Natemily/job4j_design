@@ -4,6 +4,10 @@ import java.util.Calendar;
 
 public class User {
     private String name;
-    public int children;
+    private int children;
     private Calendar birthday;
+
+    public User() {
+
+    }
 }
