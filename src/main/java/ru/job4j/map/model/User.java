@@ -16,11 +16,6 @@ public class User {
         this.birthday = birthday;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, children, birthday);
-    }
-
     public static void main(String[] args) {
         Calendar birthday = Calendar.getInstance();
         birthday.set(2011, 6, 1);
