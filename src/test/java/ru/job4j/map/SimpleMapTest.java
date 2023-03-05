@@ -34,7 +34,7 @@ class SimpleMapTest {
     void whenCheckPut() {
         assertThat(map.put(0, "0")).isTrue();
         assertThat(map).hasSize(5);
-        assertThat(map.put(2, "8")).isFalse();
+        assertThat(map.put(8, "8")).isFalse();
         assertThat(map).hasSize(5);
         assertThat(map.put(1, "10")).isFalse();
         assertThat(map.get(1)).isEqualTo("1");
@@ -53,8 +53,8 @@ class SimpleMapTest {
     void whenCheckPutMore() {
         assertThat(map.put(0, "1")).isTrue();
         assertThat(map).hasSize(5);
-        assertThat(map.put(8, "8")).isTrue();
-        assertThat(map).hasSize(6);
+        assertThat(map.put(8, "8")).isFalse();
+        assertThat(map).hasSize(5);
     }
 
     @Test
@@ -146,7 +146,7 @@ class SimpleMapTest {
         assertThat(map.put(15, "15")).isTrue();
         assertThat(map).hasSize(6);
         assertThat(map.put(8, "8")).isTrue();
-        assertThat(map.put(15, "16")).isFalse();
+        assertThat(map.put(16, "16")).isFalse();
         assertThat(map.get(4)).isEqualTo("4");
         assertThat(map.get(8)).isEqualTo("8");
         assertThat(map.get(15)).isEqualTo("15");

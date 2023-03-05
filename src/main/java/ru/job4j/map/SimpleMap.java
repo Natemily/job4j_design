@@ -20,9 +20,6 @@ public class SimpleMap<K, V> implements Map<K, V> {
     public boolean put(K key, V value) {
         boolean result = false;
         int i;
-        if (capacity * LOAD_FACTOR >= count) {
-            expand();
-        }
         if (key == null) {
             i = 0;
         } else {
@@ -34,15 +31,18 @@ public class SimpleMap<K, V> implements Map<K, V> {
             count++;
             modCount++;
         }
+        if (capacity * LOAD_FACTOR <= count) {
+            expand();
+        }
         return result;
     }
 
     private int hash(int hashCode) {
-        return hashCode % table.length;
+        return hashCode % capacity;
     }
 
     private int indexFor(int hash) {
-        return hash & (table.length - 1);
+        return hash & (capacity - 1);
     }
 
     private void expand() {
@@ -110,10 +110,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                while (index < capacity - 1 && table[index] == null) {
+                while (index < capacity && table[index] == null) {
                     index++;
                 }
-                return table[index] != null;
+                return index < capacity;
             }
 
             @Override
