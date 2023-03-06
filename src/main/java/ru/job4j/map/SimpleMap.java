@@ -16,15 +16,20 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private MapEntry<K, V>[] table = new MapEntry[capacity];
 
+    private int indexFound(K key) {
+        int index;
+        if (key == null) {
+            index = 0;
+        } else {
+            index = indexFor(hash(key.hashCode()));
+        }
+        return index;
+    }
+
     @Override
     public boolean put(K key, V value) {
         boolean result = false;
-        int i;
-        if (key == null) {
-            i = 0;
-        } else {
-            i = indexFor(hash(key.hashCode()));
-        }
+        int i = indexFound(key);
         if (table[i] == null) {
             table[i] = new MapEntry<>(key, value);
             result = true;
@@ -38,7 +43,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private int hash(int hashCode) {
-        return hashCode % capacity;
+        return hashCode ^ (hashCode >>> 16);
     }
 
     private int indexFor(int hash) {
@@ -64,13 +69,13 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         V result = null;
+        int i = indexFound(key);
         if (key == null) {
             if (table[0] != null && table[0].key == null) {
                 result = table[0].value;
             }
         } else {
-            int i = indexFor(hash(key.hashCode()));
-            if (table[i] != null && key.equals(table[i].key)) {
+            if (checkNull(i, key)) {
                 result = table[i].value;
             }
         }
@@ -80,6 +85,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean remove(K key) {
         boolean result = false;
+        int i = indexFound(key);
         if (key == null) {
             if (table[0] != null && table[0].key == null) {
                 table[0] = null;
@@ -88,8 +94,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 modCount++;
             }
         } else {
-            int i = indexFor(hash(key.hashCode()));
-            if (table[i] != null && table[i].key.equals(key)) {
+            if (checkNull(i, key)) {
                 table[i] = null;
                 result = true;
                 count--;
@@ -97,6 +102,13 @@ public class SimpleMap<K, V> implements Map<K, V> {
             }
         }
         return result;
+    }
+
+    private boolean checkNull(int i, K key) {
+        return table[i] != null
+                && table[i].key != null
+                && key.hashCode() == table[i].key.hashCode()
+                && key.equals(table[i].key);
     }
 
     @Override
