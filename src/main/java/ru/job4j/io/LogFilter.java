@@ -25,7 +25,7 @@ public class LogFilter {
                 new BufferedOutputStream(
                         new FileOutputStream(file)
                 ))) {
-            for (Object value : log) {
+            for (String value : log) {
                 out.println(value);
             }
         } catch (IOException e) {
