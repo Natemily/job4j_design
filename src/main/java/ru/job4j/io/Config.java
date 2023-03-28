@@ -19,11 +19,10 @@ public class Config {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 if (!line.isEmpty() && !line.startsWith("#")) {
                     String[] array = line.split("=", 2);
-                    if (array[0].equals("") || array[array.length - 1].equals("") || array.length != 2) {
+                    if (array.length != 2 || array[0].isBlank() || array[1].isBlank()) {
                         throw new IllegalArgumentException();
-                    } else {
-                        values.put(array[0], array[array.length - 1]);
                     }
+                    values.put(array[0], array[array.length - 1]);
                 }
             }
         } catch (IOException e) {
