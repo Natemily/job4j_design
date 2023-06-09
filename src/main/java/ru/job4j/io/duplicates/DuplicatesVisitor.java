@@ -12,8 +12,7 @@ import java.util.Set;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
 
-    Map<FileProperty, Set<String>> filesList = new HashMap<>();
-
+    private Map<FileProperty, Set<String>> filesList = new HashMap<>();
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
@@ -32,5 +31,15 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
             }
         }
         return filesListTotal;
+    }
+
+    public void print(Map<FileProperty, Set<String>> list) {
+        for (FileProperty key : list.keySet()) {
+            Set<String> value = list.get(key);
+            System.out.println(key.toString());
+            for (String name : value) {
+                System.out.println(name);
+            }
+        }
     }
 }
