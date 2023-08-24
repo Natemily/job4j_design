@@ -20,13 +20,13 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.9.0</version>
+      <version>5.9.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.23.1</version>
+      <version>3.24.2</version>
       <scope>test</scope>
     </dependency>
 <dependency>
@@ -39,6 +39,12 @@
     <artifactId>slf4j-log4j12</artifactId>
     <version>1.7.30</version>
 </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.10.1</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -67,6 +73,11 @@
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
             <version>10.3.1</version>
+          </dependency>
+          <dependency>
+             <groupId>com.google.code.gson</groupId>
+              <artifactId>gson</artifactId>
+              <version>2.10.1</version>
           </dependency>
         </dependencies>
         <executions>
