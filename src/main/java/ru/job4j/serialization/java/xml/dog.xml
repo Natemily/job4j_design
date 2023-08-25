@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<dog active="true" age="8" name="Rocket">
+    <contact phone="12-345"/>
+    <statuses>
+        <status>Playing</status>
+        <status>Sleeping</status>
+    </statuses>
+</dog>
