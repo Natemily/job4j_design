@@ -2,28 +2,32 @@ package ru.job4j.serialization.java.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        final Dog dog = new Dog(true, 8, "Rocket", new Contact("12-345"),
-                new String[] {"Playing", "Sleeping"});
 
-        final Gson gson = new GsonBuilder().create();
-        System.out.println(gson.toJson(dog));
+        JSONObject jsonContact = new JSONObject("{\"phone\":\"+7(924)111-111-11-11\"}");
 
-        final String dogJson =
-                "{"
-                        + "\"active\":true,"
-                        + "\"age\":1,"
-                        + "\"name\":Jack,"
-                        + "\"contact\":"
-                        + "{"
-                        + "\"phone\":\"+7(924)111-111-11-11\""
-                        + "},"
-                        + "\"statuses\":"
-                        + "[\"Sleeping\",\"Eating\"]"
-                        + "}";
-        final Dog dogMod = gson.fromJson(dogJson, Dog.class);
-        System.out.println(dogMod);
+        List<String> list = new ArrayList<>();
+        list.add("Eating");
+        list.add("Running");
+        JSONArray jsonStatuses = new JSONArray(list);
+
+        final Dog dog = new Dog(true, 8, "Rocket", new Contact("12-345"), new String[]{"Playing", "Sleeping"});
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("active", dog.isActive());
+        jsonObject.put("age", dog.getAge());
+        jsonObject.put("name", dog.getName());
+        jsonObject.put("contact", jsonContact);
+        jsonObject.put("statuses", jsonStatuses);
+
+        System.out.println(jsonObject.toString());
+
+        System.out.println(new JSONObject(dog).toString());
     }
 }

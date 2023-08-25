@@ -27,4 +27,24 @@ public class Dog {
                 + ", statuses=" + Arrays.toString(statuses)
                 + '}';
     }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public String[] getStatuses() {
+        return statuses;
+    }
 }
