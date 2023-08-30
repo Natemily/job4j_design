@@ -27,15 +27,10 @@ insert into categories(categorie) values ('unimportant');
 insert into comments(comment) values ('все путем');
 insert into comments(comment) values ('не важно');
 
-insert into items(comment_id, attach_id, category_id, state_id) values (1, 1, 1, 1);
-insert into items(comment_id, attach_id, category_id, state_id) values (2, 2, 2, 2);
-insert into items(comment_id, attach_id, category_id, state_id) values (1, 2, 1, 2);
-insert into items(comment_id, attach_id, category_id, state_id) values (2, 1, 2, 1);
-
-update items set user_id = 1 where id = 1;
-update items set user_id = 3 where id = 2;
-update items set user_id = 4 where id = 3;
-update items set user_id = 2 where id = 4;
+insert into items(category_id, state_id, user_id) values (1, 1, 1);
+insert into items(category_id, state_id, user_id) values (2, 2, 3);
+insert into items(category_id, state_id, user_id) values (1, 2, 4);
+insert into items(category_id, state_id, user_id) values (2, 1, 2);
 
 update comments set item_id = 4 where id = 1;
 update comments set item_id = 3 where id = 2;
