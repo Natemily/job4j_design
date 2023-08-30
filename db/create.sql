@@ -49,3 +49,13 @@ create table items(
 );
 
 ALTER TABLE users ADD COLUMN item_id int references items(id);
+
+ALTER TABLE users DROP COLUMN item_id;
+
+ALTER TABLE items ADD COLUMN user_id int references users(id);
+
+ALTER TABLE items DROP COLUMN comment_id;
+ALTER TABLE items DROP COLUMN attach_id;
+
+ALTER TABLE comments ADD COLUMN item_id int references items(id);
+ALTER TABLE attachs ADD COLUMN item_id int references items(id);
