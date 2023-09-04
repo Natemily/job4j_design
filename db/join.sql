@@ -55,4 +55,4 @@ insert into teens(name, gender) values ('Аня', 'f');
 select m.name as m, f.name as f, (m.name, f.name) as "Пары"
 from teens m
 cross join teens f
-where m.gender != f.gender;
+where m.gender != f.gender and m.gender like 'm%';
