@@ -80,3 +80,38 @@ insert into products (name, producer, count, price) VALUES ('product_3', 'produc
 
 select * from products;
 select * from history_of_price;
+
+create or replace procedure update_data(u_count integer, u_id integer)
+language 'plpgsql'
+as $$
+    BEGIN
+        update products set count = count - u_count
+		where id = u_id;
+        delete from products
+		where count <= 0 and id = u_id;
+    END;
+$$;
+
+call update_data(3, 3);
+select * from products;
+
+
+create or replace function f_update_data(u_count integer, u_id integer)
+returns integer
+language 'plpgsql'
+as
+$$
+    declare
+        result integer;
+	BEGIN
+        update products set count = count - u_count
+		where id = u_id;
+        delete from products
+		where count <= 0 and id = u_id;
+		select into result id from products where id = u_id;
+    return result;
+	END;
+$$;
+
+select f_update_data(1, 4);
+select * from products;
