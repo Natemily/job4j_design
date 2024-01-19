@@ -64,4 +64,5 @@ MOVE BACKWARD 6 FROM cursor_product;
 FETCH NEXT FROM cursor_product;
 
 FETCH PRIOR FROM cursor_product;
+CLOSE cursor_product;
 commit transaction;
