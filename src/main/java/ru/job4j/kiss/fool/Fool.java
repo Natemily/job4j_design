@@ -11,34 +11,18 @@ public class Fool {
         return value % 5 == 0;
     }
 
-    public static void computerTurn(int startAt) {
-        if (check3(startAt) && check5(startAt)) {
-            System.out.println("FizzBuzz");
-        } else if (check3(startAt)) {
-            System.out.println("Fizz");
-        } else if (check5(startAt)) {
-            System.out.println("Buzz");
-        } else {
-            System.out.println(startAt);
+    public static String answer(int startAt) {
+        String answer = "";
+        if (!check3(startAt) && !check5(startAt)) {
+            answer += startAt;
         }
-    }
-
-    public static boolean userAnswer(String answer, int startAt) {
-        String expected;
-        boolean res = true;
-        if (check3(startAt) && check5(startAt)) {
-            expected = "FizzBuzz";
-        } else if (check3(startAt)) {
-            expected = "Fizz";
-        } else if (check5(startAt)) {
-            expected = "Buzz";
-        } else {
-            expected = String.valueOf(startAt);
+        if (check3(startAt)) {
+            answer += "Fizz";
         }
-        if (!expected.equals(answer)) {
-            res = false;
+        if (check5(startAt)) {
+            answer += "Buzz";
         }
-        return res;
+        return answer;
     }
 
     public static void main(String[] args) {
@@ -46,10 +30,10 @@ public class Fool {
         var startAt = 1;
         var input = new Scanner(System.in);
         while (startAt < 100) {
-            computerTurn(startAt);
+            System.out.println(answer(startAt));
             startAt++;
-            var answer = input.nextLine();
-            if (!userAnswer(answer, startAt)) {
+            var userAnswer = input.nextLine();
+            if (!answer(startAt).equals(userAnswer)) {
                 System.out.println("Ошибка. Начинай снова.");
                 startAt = 0;
             }
